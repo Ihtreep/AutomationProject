@@ -30,6 +30,10 @@ aws s3 ls s3://$name
 
 #task3
 
+cd /etc/cron.d
+ 
+* * 1 * * root /home/ubuntu >> /root/automation.sh
+
 touch /var/www/html/inventory.html
 
 Logname=httpd-logs
@@ -39,10 +43,4 @@ size=$(du -sh $tarFile_name  | awk '{print $1}')
 
 echo "$Logname  $timestamp   $LogType   $size" >>/var/www/html/inventory.html
 
-#moving automation.sh to run cronjob
-cp automation.sh /root
-chmod u+x /root/automation.sh
-
-#cronjob scrip
-* * * * * root /root/automation.sh
 
