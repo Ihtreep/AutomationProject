@@ -26,3 +26,23 @@ aws s3 cp  /tmp/$tar_File_name s3://${name}/$tar_File_name
 #Listing bucketname and files in bucket
 aws s3 ls
 aws s3 ls s3://$name
+
+
+#task3
+
+touch /var/www/html/inventory.html
+
+Logname=httpd-logs
+#DateCreated=$timestamp
+LogType=$(file /tmp/$tar_File_name  | awk '{print $3}' )
+size=$(du -sh $tarFile_name  | awk '{print $1}')
+
+echo "$Logname  $timestamp   $LogType   $size" >>/var/www/html/inventory.html
+
+#moving automation.sh to run cronjob
+cp automation.sh /root
+chmod u+x /root/automation.sh
+
+#cronjob scrip
+* * * * * root /root/automation.sh
+
